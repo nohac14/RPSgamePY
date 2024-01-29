@@ -15,6 +15,9 @@ def choiceCPU():
         print('SCISSORS')
     return cI
 
+def choiceCPUapp():
+    return randint(1,3)
+
 def choicePlayer():
     print('>> ', end="")
     pI = int(input())
@@ -40,6 +43,23 @@ def fight(pI, cI, stats):
         print('YOU LOSE')
         wOl = 'YOU LOSE'
         updateStats(stats, pI, cI, wOl)
+        
+def fightApp(pI, cI, stats):
+    if (pI == cI):
+        print('DRAW.')
+        wOl = 'DRAW.'
+        updateStats(stats, pI, cI, wOl)
+        return wOl
+    elif ((pI == 1 and cI == 3) or (pI == 2 and cI == 1) or (pI == 3 and cI == 2)):
+        print('YOU WIN!')
+        wOl = 'YOU WIN!'
+        updateStats(stats, pI, cI, wOl)
+        return wOl
+    else:
+        print('YOU LOSE')
+        wOl = 'YOU LOSE'
+        updateStats(stats, pI, cI, wOl)
+        return wOl
         
 def updateStats(stats, pI, cI, wOl):
     if (pI == 1):
