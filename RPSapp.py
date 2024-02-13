@@ -25,19 +25,23 @@ def play(playerC):
     result = fight(playerC, cpuC)
     stats.append(playerC + " VS " + cpuC + "\n" + result + "\n")
     resultL["text"] = f"Player: {playerC}\nCPU: {cpuC}\n{result}"
-    
+    update_stats_text()
+
+def update_stats_text():
+    stats_text.config(state=tk.NORMAL)
+    stats_text.delete(1.0, tk.END)
+    stats_text.insert(tk.END, "\n".join(stats))
+    stats_text.config(state=tk.DISABLED)
+
 def on_closing():
-    result = messagebox.askquestion("Exit", "Do you want to exit and view stats?")
-    if result == "yes":
-        messagebox.showinfo("Stats", "\n".join(stats))
-        root.destroy()
+    root.destroy()
 
 root = tk.Tk()
 
 stats = []
 
 root.iconbitmap("RPS.ico")
-root.title("CHOOSE YOUR FIGHTER!")
+root.title("Rock, Paper, Scissors, SHOOT!")
 
 resultL = tk.Label(root, text="")
 
@@ -50,6 +54,15 @@ resultL.grid(row=1, column=0, columnspan=3, pady=10)
 rockB.grid(row=0, column=0, padx=10, pady=10)
 paperB.grid(row=0, column=1, padx=10, pady=10)
 scissorsB.grid(row=0, column=2, padx=10, pady=10)
+
+# Scrollbar and Text widget for stats
+scrollbar = tk.Scrollbar(root)
+scrollbar.grid(row=2, column=3, sticky=tk.NS)
+
+stats_text = tk.Text(root, wrap=tk.WORD, yscrollcommand=scrollbar.set, state=tk.DISABLED)
+stats_text.grid(row=2, column=0, columnspan=3, pady=10)
+
+scrollbar.config(command=stats_text.yview)
 
 root.protocol("WM_DELETE_WINDOW", on_closing)
 
